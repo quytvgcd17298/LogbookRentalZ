@@ -24,7 +24,7 @@
     <EditText
         android:id="@+id/property"
         android:layout_width="264dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginStart="136dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="136dp"
@@ -48,7 +48,7 @@
     <EditText
         android:id="@+id/datetime"
         android:layout_width="264dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginStart="136dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="136dp"
@@ -62,7 +62,7 @@
     <EditText
         android:id="@+id/price"
         android:layout_width="264dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginStart="136dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="136dp"
@@ -101,7 +101,7 @@
     <EditText
         android:id="@+id/reporter"
         android:layout_width="264dp"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginStart="136dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="136dp"

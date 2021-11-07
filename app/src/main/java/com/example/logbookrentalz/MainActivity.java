@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     EditText property, datetime, price, note, reporter;
     Spinner spinnerBedroom, spinnerFurniture;
     Button submit;
+    SQLite db;
 
 
     @Override
@@ -31,31 +32,41 @@ public class MainActivity extends AppCompatActivity {
         reporter = findViewById(R.id.reporter);
         submit = findViewById(R.id.submit);
 
+        db = new SQLite(this);
+
         spinnerBedroom = (Spinner)findViewById(R.id.spinnerBedroom);
-    //Tạo danh sách phòng
-        ArrayList<String> arrayBedroom = new ArrayList<String>();
+
+        final ArrayList<String> arrayBedroom = new ArrayList<String>();
+        arrayBedroom.add("Bedrooms");
         arrayBedroom.add("Single Room");
         arrayBedroom.add("Double Room");
         arrayBedroom.add("Triple Room");
         arrayBedroom.add("King Room");
         arrayBedroom.add("President Room");
         arrayBedroom.add("Apartment");
-    //Hiển thị Dropdown List
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,arrayBedroom);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // Tạo khoảng trống giữa các đối items Spinner
-        spinnerBedroom.setAdapter(arrayAdapter);
-    //Xử lý khi click vào các items trong spinner
-        spinnerBedroom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        ArrayAdapter arrayAdapterBed = new ArrayAdapter(this, android.R.layout.simple_spinner_item,arrayBedroom);
+        arrayAdapterBed.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerBedroom.setAdapter(arrayAdapterBed);
+
+        spinnerBedroom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(MainActivity.this, arrayBedroom.get(i), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(MainActivity.this, "Please enter bedroom !!!", Toast.LENGTH_LONG).show();
             }
         });
 
 
+
         spinnerFurniture = (Spinner)findViewById(R.id.spinnerFurniture);
 
-        ArrayList<String> arrayFurniture = new ArrayList<String>();
+        final ArrayList<String> arrayFurniture = new ArrayList<String>();
+        arrayFurniture.add("Furniture Types");
         arrayFurniture.add("Classic");
         arrayFurniture.add("NeoClassic");
         arrayFurniture.add("Modern");
@@ -66,12 +77,18 @@ public class MainActivity extends AppCompatActivity {
         arrayAdapterFur.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerFurniture.setAdapter(arrayAdapterFur);
 
-        spinnerFurniture.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        spinnerFurniture.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(MainActivity.this, arrayFurniture.get(i), Toast.LENGTH_SHORT).show();
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(MainActivity.this, "Please enter furniture types !!!", Toast.LENGTH_LONG).show();
+            }
         });
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,10 +104,13 @@ public class MainActivity extends AppCompatActivity {
 
                 if (!propertyText.isEmpty() & !bedroomText.isEmpty() & !datetimeText.isEmpty() &
                     !priceText.isEmpty() & !furnitureText.isEmpty() & !reporterText.isEmpty()){
-                    Toast.makeText(MainActivity.this, "Inserted Successfully !!!", Toast.LENGTH_LONG).show();
+                    Boolean insertedDataSuccessful = db.insertAndroidData(propertyText, bedroomText, datetimeText,priceText,furnitureText,noteText,reporterText);
+                    if(insertedDataSuccessful) {
+                        Toast.makeText(MainActivity.this, "Inserted Successfully !!!", Toast.LENGTH_LONG).show();
+                    }
                 }
                 else{
-                    Toast.makeText(MainActivity.this, "Please Insert Inputs !!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Please Insert All Inputs !!!", Toast.LENGTH_LONG).show();
                 }
             }
         });
