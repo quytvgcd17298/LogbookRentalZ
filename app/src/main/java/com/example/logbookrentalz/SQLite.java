@@ -2,6 +2,7 @@ package com.example.logbookrentalz;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -21,7 +22,7 @@ public class SQLite extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS AndroidDetails");
     }
 
-    public Boolean insertAndroidData(String property, String bedroom, String datetime, String price, String furniture, String note, String reporter){
+    public Boolean insertAndroidData(String property, String bedroom, String datetime, String price, String furniture, String note, String reporter) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("property", property);
@@ -33,5 +34,10 @@ public class SQLite extends SQLiteOpenHelper {
         contentValues.put("reporter", reporter);
         long result = db.insert("AndroidDetails", null, contentValues);
         return result != 1;
+    }
+        public Cursor getData(){
+            SQLiteDatabase DB = this.getReadableDatabase();
+            Cursor cursor = DB.rawQuery("SELECT * FROM AndroidDetails", null);
+            return cursor;
     }
 }

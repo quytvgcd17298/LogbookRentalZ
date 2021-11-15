@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LogbookRentalZ</string>
+    <string name="invalid_property">"Please Enter Valid Property "</string>
+    <string name="invalid_datetime">Please Pick Date</string>
+    <string name="invalid_price">Please Enter Price</string>
+    <string name="invalid_reporter">Please Enter Reporter</string>
 </resources>
